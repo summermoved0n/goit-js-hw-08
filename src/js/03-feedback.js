@@ -13,7 +13,6 @@ form.addEventListener('submit', onFormSubmit);
 
 form.addEventListener('input', throttle((e) => {
   formData[e.target.name] = e.target.value
-  console.log(formData)
     localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
 }, 500));
 
