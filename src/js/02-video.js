@@ -8,7 +8,7 @@ const player = new Player(iframe);
 
 function getItemStorage() {
   const savedTime = localStorage.getItem(STORAGE_KEY);
-  return savedTime ? parseFloat(savedTime) : 0;
+  return savedTime;
 }
 
 player.on(
