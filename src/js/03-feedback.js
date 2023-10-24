@@ -5,35 +5,25 @@ const STORAGE_KEY = 'feedback-form-state';
 const form = document.querySelector('.feedback-form');
 const textarea = document.querySelector('.feedback-form textarea');
 const input = document.querySelector('.feedback-form input');
-let formData = {};
 
 getText();
 
 form.addEventListener('submit', onFormSubmit);
 
-input.addEventListener(
-  'input',
-  throttle(e => {
-    (formData.email = e.target.value),
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
-  }, 500)
-);
+form.addEventListener('input', throttle(onFormInput, 500));
 
-textarea.addEventListener(
-  'input',
-  throttle(e => {
-    (formData.message = e.target.value),
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
-  }, 500)
-);
-
+function onFormInput(evt) {
+  const formData = {
+    email: form.elements.email.value,
+    message: form.elements.message.value,
+  };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+}
 
 function onFormSubmit(e) {
   e.preventDefault();
-  console.log({
-    email: input.value,
-    message: textarea.value,
-  });
+  const formData = JSON.parse(localStorage.getItem(STORAGE_KEY));
+  console.log(formData);
   e.currentTarget.reset();
   localStorage.removeItem(STORAGE_KEY);
 }
